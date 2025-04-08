@@ -41,7 +41,9 @@ android {
 }
 
 dependencies {
-
+    implementation("com.google.firebase:firebase-auth:21.1.0")
+    implementation("com.google.firebase:firebase-firestore:24.6.0")
+    implementation("com.google.android.gms:play-services-auth:20.4.0")
     implementation(libs.picasso)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

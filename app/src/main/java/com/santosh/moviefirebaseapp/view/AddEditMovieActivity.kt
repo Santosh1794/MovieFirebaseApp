@@ -1,5 +1,6 @@
 package com.santosh.moviefirebaseapp.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -15,9 +16,11 @@ class AddEditMovieActivity : AppCompatActivity() {
     private lateinit var titleField: EditText
     private lateinit var studioField: EditText
     private lateinit var ratingField: EditText
+    private lateinit var thumbnailField: EditText   // ✅ Added
     private lateinit var saveButton: Button
     private var movieId: String? = null
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_edit_movie)
@@ -25,6 +28,7 @@ class AddEditMovieActivity : AppCompatActivity() {
         titleField = findViewById(R.id.movie_title_edit)
         studioField = findViewById(R.id.movie_studio_edit)
         ratingField = findViewById(R.id.movie_rating_edit)
+        thumbnailField = findViewById(R.id.movie_thumbnail_edit) // ✅ Initialized
         saveButton = findViewById(R.id.save_button)
 
         movieId = intent.getStringExtra("movie_id")
@@ -38,43 +42,47 @@ class AddEditMovieActivity : AppCompatActivity() {
                         titleField.setText(movie.title)
                         studioField.setText(movie.studio)
                         ratingField.setText(movie.rating.toString())
+                        thumbnailField.setText(movie.thumbnailUrl) // ✅ Fixed
                     }
                 }
         }
 
         saveButton.setOnClickListener {
-            val title = titleField.text.toString()
-            val studio = studioField.text.toString()
-            val rating = ratingField.text.toString().toIntOrNull()
+            val title = titleField.text.toString().trim()
+            val studio = studioField.text.toString().trim()
+            val rating = ratingField.text.toString().toDoubleOrNull()
+            val thumbnail = thumbnailField.text.toString().trim()
 
-            if (rating != null) {
+            if (title.isNotEmpty() && studio.isNotEmpty() && rating != null) {
                 val movie = Movie(
-                    title, studio, rating.toString(),
-                    rating = TODO()
+                    id = movieId ?: "",
+                    title = title,
+                    studio = studio,
+                    rating = rating,
+                    thumbnailUrl = thumbnail
                 )
+
                 if (movieId == null) {
-                    // Add new movie
                     db.collection("movies").add(movie)
                         .addOnSuccessListener {
-                            Toast.makeText(this, "Movie Added", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Movie added", Toast.LENGTH_SHORT).show()
                             finish()
                         }
                         .addOnFailureListener {
-                            Toast.makeText(this, "Error adding movie", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Failed to add movie", Toast.LENGTH_SHORT).show()
                         }
                 } else {
-                    // Update existing movie
                     db.collection("movies").document(movieId!!).set(movie)
                         .addOnSuccessListener {
-                            Toast.makeText(this, "Movie Updated", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Movie updated", Toast.LENGTH_SHORT).show()
                             finish()
                         }
                         .addOnFailureListener {
-                            Toast.makeText(this, "Error updating movie", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Failed to update movie", Toast.LENGTH_SHORT).show()
                         }
                 }
             } else {
-                Toast.makeText(this, "Invalid rating", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please fill all fields correctly", Toast.LENGTH_SHORT).show()
             }
         }
     }
