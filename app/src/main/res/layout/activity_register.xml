@@ -6,6 +6,16 @@
     android:padding="16dp"
     android:gravity="center">
 
+    <!-- Title: Register -->
+    <TextView
+        android:id="@+id/register_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp" />
+
     <EditText
         android:id="@+id/email_edit"
         android:layout_width="match_parent"
@@ -37,6 +47,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back to Login"
-        android:onClick="onBackPressed" />
+        android:onClick="onBackPressed"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/black"/>
 
 </LinearLayout>

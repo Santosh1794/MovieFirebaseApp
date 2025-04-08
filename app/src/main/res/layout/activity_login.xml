@@ -5,6 +5,17 @@
     android:padding="16dp"
     android:gravity="center">
 
+    <!-- Title: Login -->
+    <TextView
+        android:id="@+id/login_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp"
+        android:textColor="@android:color/black"/>
+
     <!-- Email Field -->
     <EditText
         android:id="@+id/email_edit"
@@ -28,7 +39,9 @@
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login" />
+        android:text="Login"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"/>
 
     <!-- Register Button -->
     <Button
@@ -36,5 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Don't have an account? Register"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/teal_700"/>
 </LinearLayout>

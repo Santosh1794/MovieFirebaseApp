@@ -6,12 +6,11 @@
     android:background="@android:color/white"
     android:gravity="center">
 
-    <!-- Title TextView -->
+    <!-- Dynamic Title TextView -->
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/page_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Movie"
         android:textSize="24sp"
         android:textColor="@android:color/black"
         android:gravity="center"
