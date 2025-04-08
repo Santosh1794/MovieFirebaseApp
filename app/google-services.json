@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "609394196704",
+    "project_id": "moviefirebaseapp-5b3ce",
+    "storage_bucket": "moviefirebaseapp-5b3ce.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609394196704:android:d3995a51b00c04e1461085",
+        "android_client_info": {
+          "package_name": "com.santosh.moviefirebaseapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHR5nDf3wGLf2GQRtUza_X2WB-M9Gb7ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
