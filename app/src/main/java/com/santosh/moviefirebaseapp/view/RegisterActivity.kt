@@ -12,6 +12,7 @@ import com.santosh.moviefirebaseapp.R
 
 class RegisterActivity : AppCompatActivity() {
 
+    // Firebase Authentication instance
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     @SuppressLint("MissingInflatedId")
@@ -19,10 +20,11 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
+        // UI references
         val emailField: EditText = findViewById(R.id.email_edit)
         val passwordField: EditText = findViewById(R.id.password_edit)
         val registerButton: Button = findViewById(R.id.register_button)
-
+        // Handle register button click
         registerButton.setOnClickListener {
             val email = emailField.text.toString()
             val password = passwordField.text.toString()
@@ -39,12 +41,12 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Create user in Firebase
+            // Attempt to create a new user with Firebase Authentication
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show()
-                        finish() // Close activity
+                        finish()
                     } else {
                         Toast.makeText(this, "Registration Failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     }

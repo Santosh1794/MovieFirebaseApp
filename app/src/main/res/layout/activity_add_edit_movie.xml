@@ -6,7 +6,7 @@
     android:background="@android:color/white"
     android:gravity="center">
 
-    <!-- Dynamic Title TextView -->
+    <!-- Dynamic Title TextView-->
     <TextView
         android:id="@+id/page_title"
         android:layout_width="match_parent"

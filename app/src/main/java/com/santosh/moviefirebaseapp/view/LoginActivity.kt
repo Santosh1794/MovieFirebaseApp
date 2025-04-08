@@ -10,13 +10,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.santosh.moviefirebaseapp.R
 
 class LoginActivity : AppCompatActivity() {
-
+    // Firebase Authentication instance
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+        // Initialize UI components
         val emailField: EditText = findViewById(R.id.email_edit)
         val passwordField: EditText = findViewById(R.id.password_edit)
         val loginButton: Button = findViewById(R.id.login_button)
@@ -27,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
             navigateToMovieList()
         }
 
+        // Handle Login button click
         loginButton.setOnClickListener {
             val email = emailField.text.toString()
             val password = passwordField.text.toString()
@@ -36,12 +37,14 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please enter both email and password", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
+            // Attempt to log in with Firebase Auth
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
+                    //successful login go to movie list
                     if (task.isSuccessful) {
                         navigateToMovieList()
                     } else {
+                        //failed login show error message
                         Toast.makeText(this, "Login Failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     }
                 }

@@ -12,15 +12,17 @@ import com.santosh.moviefirebaseapp.R
 import com.santosh.moviefirebaseapp.model.Movie
 
 class AddEditMovieActivity : AppCompatActivity() {
-
+    // Reference to the Firestore database
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    // UI elements
     private lateinit var titleField: EditText
     private lateinit var studioField: EditText
     private lateinit var ratingField: EditText
     private lateinit var thumbnailField: EditText
     private lateinit var saveButton: Button
     private lateinit var cancelButton: Button
-    private lateinit var pageTitle: TextView // Added for dynamic title
+    private lateinit var pageTitle: TextView
+    // to check weather we are editing or adding
     private var movieId: String? = null
     private var isEditMode = false
 
@@ -51,6 +53,7 @@ class AddEditMovieActivity : AppCompatActivity() {
             db.collection("movies").document(movieId!!).get()
                 .addOnSuccessListener { documentSnapshot ->
                     documentSnapshot.toObject(Movie::class.java)?.let { movie ->
+                        // Populate the fields with movie data
                         titleField.setText(movie.title)
                         studioField.setText(movie.studio)
                         ratingField.setText(movie.rating.toString())
@@ -58,30 +61,33 @@ class AddEditMovieActivity : AppCompatActivity() {
                     }
                 }
         } else {
+            // defsult mode adding new movie
             pageTitle.text = "Add Movie"
             saveButton.text = "Save"
         }
-
+        //cancel button simply close the ativity
         cancelButton.setOnClickListener {
             finish()
         }
-
+        // Save/Update the movie when save button is clicked
         saveButton.setOnClickListener {
             saveMovie()
         }
     }
-
+    // Function to validate and save or update a movie entry
     private fun saveMovie() {
         val title = titleField.text.toString().trim()
         val studio = studioField.text.toString().trim()
         val rating = ratingField.text.toString().toDoubleOrNull()
         val thumbnail = thumbnailField.text.toString().trim()
 
+        // Check for required fields and valid rating
         if (title.isEmpty() || studio.isEmpty() || rating == null) {
             Toast.makeText(this, "Please fill all fields correctly", Toast.LENGTH_SHORT).show()
             return
         }
 
+        // Create a Movie object to save
         val movie = Movie(
             id = movieId ?: "",
             title = title,

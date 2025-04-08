@@ -15,7 +15,7 @@ import com.santosh.moviefirebaseapp.model.Movie
 import com.santosh.moviefirebaseapp.view.adapter.MovieAdapter
 
 class MovieListActivity : AppCompatActivity() {
-
+    // Firebase instances for authentication and database
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private lateinit var recyclerView: RecyclerView
@@ -25,7 +25,7 @@ class MovieListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
-
+        // Display current user email
         val userEmailTextView = findViewById<TextView>(R.id.user_email_textview)
         userEmailTextView.text = auth.currentUser?.email ?: "Guest"
 
@@ -34,7 +34,7 @@ class MovieListActivity : AppCompatActivity() {
         refreshButton = findViewById(R.id.refresh_button)
         recyclerView = findViewById(R.id.movie_recycler_view)
 
-        // Setup RecyclerView
+        // Setup RecyclerView with linear layout and empty movie list.
         recyclerView.layoutManager = LinearLayoutManager(this)
         movieAdapter = MovieAdapter(emptyList())
         recyclerView.adapter = movieAdapter
@@ -42,11 +42,11 @@ class MovieListActivity : AppCompatActivity() {
 
         // Set button click listeners
         refreshButton.setOnClickListener { refreshMovieList() }
-
+        // handle add movie button click
         findViewById<Button>(R.id.add_movie_button).setOnClickListener {
             startActivity(Intent(this, AddEditMovieActivity::class.java))
         }
-
+        // Handle logout button click
         findViewById<Button>(R.id.logout_button).setOnClickListener {
             auth.signOut()
             startActivity(Intent(this, LoginActivity::class.java))
@@ -56,7 +56,7 @@ class MovieListActivity : AppCompatActivity() {
         // Load initial data
         refreshMovieList()
     }
-
+    // Fetch movies from Firestore and update RecyclerView
     private fun refreshMovieList() {
         db.collection("movies").get()
             .addOnSuccessListener { querySnapshot ->
@@ -70,7 +70,7 @@ class MovieListActivity : AppCompatActivity() {
                 Toast.makeText(this, "Refresh failed", Toast.LENGTH_SHORT).show()
             }
     }
-
+    // Set up click listeners for edit and delete actions inside adapter
     private fun setupAdapterClickListeners() {
         movieAdapter.onEditClick = { movie ->
             Intent(this, AddEditMovieActivity::class.java).apply {

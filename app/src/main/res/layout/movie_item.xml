@@ -15,6 +15,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
+        <!-- Movie Title -->
         <TextView
             android:id="@+id/movie_title"
             android:layout_width="wrap_content"
@@ -23,7 +24,7 @@
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="#000000" />
-
+        <!-- Movie Studio -->
         <TextView
             android:id="@+id/movie_studio"
             android:layout_width="wrap_content"
@@ -31,7 +32,7 @@
             android:text="Studio"
             android:textSize="14sp"
             android:textColor="#666666" />
-
+        <!-- Movie Rating -->
         <TextView
             android:id="@+id/movie_rating"
             android:layout_width="wrap_content"
@@ -48,20 +49,20 @@
         android:orientation="vertical"
         android:layout_marginStart="12dp"
         android:gravity="center_horizontal">
-
+        <!-- Thumbnail Image -->
         <ImageView
             android:id="@+id/movie_thumbnail"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:layout_marginBottom="8dp" />
-
+        <!-- Edit and Delete Buttons in a Row -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center">
-
+            <!-- edit button-->
             <Button
                 android:id="@+id/edit_button"
                 android:layout_width="wrap_content"
@@ -73,7 +74,7 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:layout_marginEnd="4dp"/>
-
+            <!-- Delete Button -->
             <Button
                 android:id="@+id/delete_button"
                 android:layout_width="wrap_content"
