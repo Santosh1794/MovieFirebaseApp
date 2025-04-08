@@ -2,47 +2,92 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@android:color/white"
+    android:gravity="center">
 
+    <!-- Title TextView -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Movie"
+        android:textSize="24sp"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"/>
+
+    <!-- Movie Title Input -->
     <EditText
         android:id="@+id/movie_title_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Movie Title"
-        android:padding="50dp"/>
+        android:padding="16dp"
+        android:background="@drawable/edit_text_border"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="12dp"/>
 
+    <!-- Studio Input -->
     <EditText
         android:id="@+id/movie_studio_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Studio"
-        android:padding="50dp"/>
+        android:padding="16dp"
+        android:background="@drawable/edit_text_border"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="12dp"/>
 
+    <!-- Rating Input -->
     <EditText
         android:id="@+id/movie_rating_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Rating"
         android:inputType="numberDecimal"
-        android:padding="50dp"/>
+        android:padding="16dp"
+        android:background="@drawable/edit_text_border"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="12dp"/>
 
+    <!-- Thumbnail URL Input -->
     <EditText
         android:id="@+id/movie_thumbnail_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Thumbnail URL"
-        android:padding="50dp"/>
+        android:padding="16dp"
+        android:background="@drawable/edit_text_border"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="12dp"/>
 
+    <!-- Save Button -->
     <Button
         android:id="@+id/save_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save" />
+        android:text="Save"
+        android:textColor="@android:color/white"
+        android:background="@color/colorPrimary"
+        android:textSize="18sp"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"/>
 
+    <!-- Cancel Button -->
     <Button
         android:id="@+id/cancel_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cancel" />
+        android:text="Cancel"
+        android:textColor="@android:color/black"
+        android:background="@android:color/darker_gray"
+        android:textSize="18sp"
+        android:padding="12dp"/>
 
 </LinearLayout>

@@ -56,8 +56,7 @@ class LoginActivity : AppCompatActivity() {
 
     // Navigate to Movie List Activity
     private fun navigateToMovieList() {
-        val intent = Intent(this@LoginActivity, MovieListActivity::class.java)
+        val intent = Intent(this, MovieListActivity::class.java)
         startActivity(intent)
-        finish() // Close Login Activity
     }
 }

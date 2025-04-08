@@ -18,6 +18,7 @@ class AddEditMovieActivity : AppCompatActivity() {
     private lateinit var ratingField: EditText
     private lateinit var thumbnailField: EditText   // ✅ Added
     private lateinit var saveButton: Button
+    private lateinit var cancelButton: Button
     private var movieId: String? = null
 
     @SuppressLint("MissingInflatedId")
@@ -30,6 +31,7 @@ class AddEditMovieActivity : AppCompatActivity() {
         ratingField = findViewById(R.id.movie_rating_edit)
         thumbnailField = findViewById(R.id.movie_thumbnail_edit) // ✅ Initialized
         saveButton = findViewById(R.id.save_button)
+        cancelButton = findViewById(R.id.cancel_button)
 
         movieId = intent.getStringExtra("movie_id")
 
@@ -45,6 +47,11 @@ class AddEditMovieActivity : AppCompatActivity() {
                         thumbnailField.setText(movie.thumbnailUrl) // ✅ Fixed
                     }
                 }
+        }
+
+        // Set up cancel button click listener
+        cancelButton.setOnClickListener {
+            finish() // Simply close the activity
         }
 
         saveButton.setOnClickListener {

@@ -3,6 +3,7 @@ package com.santosh.moviefirebaseapp.view
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,56 +20,73 @@ class MovieListActivity : AppCompatActivity() {
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private lateinit var recyclerView: RecyclerView
     private lateinit var movieAdapter: MovieAdapter
+    private lateinit var refreshButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
 
-        // Initialize RecyclerView
+        val userEmailTextView = findViewById<TextView>(R.id.user_email_textview)
+        userEmailTextView.text = auth.currentUser?.email ?: "Guest"
+
+
+        // Initialize views
+        refreshButton = findViewById(R.id.refresh_button)
         recyclerView = findViewById(R.id.movie_recycler_view)
+
+        // Setup RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
+        movieAdapter = MovieAdapter(emptyList())
+        recyclerView.adapter = movieAdapter
+        setupAdapterClickListeners() // Set click listeners once
 
-        // Add Movie Button
-        val addMovieButton: Button = findViewById(R.id.add_movie_button)
-        addMovieButton.setOnClickListener {
-            val intent = Intent(this@MovieListActivity, AddEditMovieActivity::class.java)
-            startActivity(intent)
+        // Set button click listeners
+        refreshButton.setOnClickListener { refreshMovieList() }
+
+        findViewById<Button>(R.id.add_movie_button).setOnClickListener {
+            startActivity(Intent(this, AddEditMovieActivity::class.java))
         }
 
-        // Logout Button
-        val logoutButton: Button = findViewById(R.id.logout_button)
-        logoutButton.setOnClickListener {
+        findViewById<Button>(R.id.logout_button).setOnClickListener {
             auth.signOut()
-            val intent = Intent(this@MovieListActivity, LoginActivity::class.java)
-            startActivity(intent)
-            finish() // Close MovieListActivity
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
 
-        // Fetch movies from Firestore
+        // Load initial data
+        refreshMovieList()
+    }
+
+    private fun refreshMovieList() {
         db.collection("movies").get()
             .addOnSuccessListener { querySnapshot ->
-                val movies = querySnapshot.toObjects(Movie::class.java)
-                movieAdapter = MovieAdapter(movies)
-                recyclerView.adapter = movieAdapter
+                val movies = querySnapshot.documents.map { doc ->
+                    doc.toObject(Movie::class.java)!!.copy(id = doc.id)
+                }
+                movieAdapter.submitList(movies) // Update existing adapter's data
+                Toast.makeText(this, "List refreshed", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
-                Toast.makeText(this@MovieListActivity, "Error loading movies", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Refresh failed", Toast.LENGTH_SHORT).show()
             }
+    }
 
-        // Handle Movie Adapter Item Clicks for Edit/Delete
+    private fun setupAdapterClickListeners() {
         movieAdapter.onEditClick = { movie ->
-            val intent = Intent(this@MovieListActivity, AddEditMovieActivity::class.java)
-            intent.putExtra("movie_id", movie.id)  // Pass the movie ID to edit
-            startActivity(intent)
+            Intent(this, AddEditMovieActivity::class.java).apply {
+                putExtra("movie_id", movie.id)
+                startActivity(this)
+            }
         }
 
         movieAdapter.onDeleteClick = { movie ->
-            db.collection("movies").document(movie.id.toString()).delete()
+            db.collection("movies").document(movie.id).delete()
                 .addOnSuccessListener {
-                    Toast.makeText(this@MovieListActivity, "Movie deleted", Toast.LENGTH_SHORT).show()
+                    refreshMovieList() // Refresh after delete
+                    Toast.makeText(this, "Movie deleted", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener {
-                    Toast.makeText(this@MovieListActivity, "Error deleting movie", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error deleting movie", Toast.LENGTH_SHORT).show()
                 }
         }
     }

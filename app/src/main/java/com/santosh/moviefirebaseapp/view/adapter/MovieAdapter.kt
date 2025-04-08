@@ -11,7 +11,7 @@ import com.santosh.moviefirebaseapp.R
 import com.santosh.moviefirebaseapp.model.Movie
 import com.squareup.picasso.Picasso
 
-class MovieAdapter(private val movieList: List<Movie>) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(private var movieList: List<Movie>) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     var onDeleteClick: ((Movie) -> Unit)? = null
     var onEditClick: ((Movie) -> Unit)? = null
@@ -37,6 +37,11 @@ class MovieAdapter(private val movieList: List<Movie>) : RecyclerView.Adapter<Mo
         holder.deleteButton.setOnClickListener {
             onDeleteClick?.invoke(movie)
         }
+    }
+
+    fun submitList(newList: List<Movie>) {
+        movieList = newList
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
